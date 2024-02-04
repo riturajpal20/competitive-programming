@@ -1,0 +1,28 @@
+
+bool judge(ll x, ll y, ll n, ll m)
+{
+    if (x < 0 || y < 0 || x >= n || y >= m)
+        return false;
+    else
+        return true;
+}
+ll d1[4] = {1, -1, 0, 0}, d2[4] = {0, 0, 1, -1};
+ll f = 0;
+
+void dfs(ll x, ll y, vector<vector<ll>> &vis, vector<vector<ll>> &a, ll n, ll m)
+{
+
+    // f++;
+    vis[x][y] = 1;
+    for (ll i = 0; i < 4; i++)
+    {
+        ll nx, ny;
+        nx = x + d1[i];
+        ny = y + d2[i];
+        if (judge(nx, ny, n, m) && !vis[nx][ny] && a[nx][ny] != 0)
+        {
+            f++;
+            dfs(nx, ny, vis, a, n, m);
+        }
+    }
+}

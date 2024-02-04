@@ -1,0 +1,23 @@
+1.perfect square number always have odd number of divisor 
+2.a^b=c   b^c=a   c^a=b
+we can apply this trik in subarray problems to make the conclusion thta we can find xor of every subaaray of the array 
+
+
+3 1 2
+
+total xor =0;
+xor(1,2)=0^3=3
+xor(2)=xor(3,1)^0
+
+
+
+3 4 5 6 7
+total xor=3;
+xor(4,5,6,7)=3^xor(4,5,6,7)
+xor(5,6,7)=3^xor(3,4)
+xor(6,7)=3^xor(3,4,5)
+xor(7)=3^xor(3,4,5,6)
+
+
+
+	
