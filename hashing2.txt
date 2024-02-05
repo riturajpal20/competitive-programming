@@ -1,0 +1,87 @@
+I wrote code to find a substring in another string using hashing, but it's giving me a wrong result.
+
+A description of how the code works:
+
+Store the first n powers of p=31 in array pows.
+Store hashes for each substring s[0..i] in the array h.
+Calculate the hash for each substring of length 9 using the h array and store it in a set.
+Hash the string t and store its hash.
+Compare the hash of t and hashes in the set.
+The hash h[n2-1] should exist in the set but it does not. Could you help me find the bug in the code?
+
+Note: When I use the modular inverse instead of multiplying by pows[i-8] the code runs well.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#include <bits/stdc++.h>
+
+#define m 1000000007
+#define N (int)2e6 + 3
+
+using namespace std;
+
+long long pows[N], h[N], h2[N];
+
+set<int> ss;
+
+int main() {
+
+    string s = "www.cplusplus.com/forum";
+
+    // powers array
+    pows[0] = 1;
+    int n = s.length(), p = 31;
+    for (int i = 1; i < n; i++) {
+        pows[i] = pows[i - 1] * p;
+        pows[i] %= m;
+    }
+
+    // hash from 0 to i array
+    h[0] = s[0] - 'a' + 1;
+    for (int i = 1; i < n; i++) {
+        h[i] = h[i - 1] + (s[i] - 'a' + 1) * pows[i];
+        h[i] %= m;
+    }
+
+    // storing each hash with 9 characters in a set
+    ss.insert(h[8]);
+    for (int i = 9; i < n; i++) {
+        int tp = h[i] - h[i - 9] * pows[i - 8];
+        tp %= m;
+        tp += m;
+        tp %= m;
+        ss.insert(tp);
+    }
+
+    // print hashes with 9 characters
+    set<int>::iterator itr = ss.begin();
+    while (itr != ss.end()) {
+        cout << *(itr++) << " ";
+    }
+    cout << endl;
+
+    // t is the string that i want to check if it is exist in s
+    string t = "cplusplus";
+    int n2 = t.length();
+    h2[0] = t[0] - 'a' + 1;
+    for (int i = 1; i < n2; i++) {
+        h2[i] = h2[i - 1] + (t[i] - 'a' + 1) * pows[i];
+        h2[i] %= m;
+    }
+    // print t hash
+    cout << h2[n2 - 1] << endl;
+
+    return 0;
+}
