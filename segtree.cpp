@@ -95,7 +95,16 @@ int main()
     }
     segtree.resize(4 * n);
     build(0, n - 1, v, 0);
-    cout << query(0, n - 1, 0, 3, 0);
+    // cout << query(0, n - 1, 0, 3, 0);
+    ll sum = 0;
+    for (ll i = 0; i < n; i += 1)
+    {
+        for (ll j = i + 1; j < n; j += 1)
+        {
+            sum += (query(0, n - 1, i, j, 0) * abs(i - j + 1)) % 998244353;
+        }
+    }
+    cout << sum;
 
     return 0;
 }

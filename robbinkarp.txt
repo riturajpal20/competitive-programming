@@ -1,0 +1,62 @@
+void hashh(string &s1, string &s2)
+{
+    ll ans = 0;
+
+    ll pow = 31;
+    ll p = 1;
+    for (ll i = 0; i < s2.length(); i += 1)
+    {
+        ans += ((s2[i] - 'a' + 1) * p) % mod;
+        p = (pow * p) % mod;
+    }
+
+    // robin karp algo
+
+    vec dp(s1.length());
+    vec pa(s1.length());
+    dp[0] = s1[0] - 'a' + 1;
+    pa[0] = 1;
+    p = pow;
+    for (ll i = 1; i < s1.length(); i += 1)
+    {
+        dp[i] = (dp[i - 1] + (s1[i] - 'a' + 1) * p) % mod;
+        pa[i] = p;
+        p = (p * pow) % mod;
+    }
+    ll start = 0;
+    ll end = s2.length() - 1;
+    vec res;
+    while (end < s1.length())
+    {
+        ll win = dp[end];
+        if (start > 0)
+        {
+            win = (dp[end] - dp[start - 1] + mod) % mod;
+        }
+        if (win == (ans * pa[start]) % mod)
+        {
+            res.pb(start + 1);
+        }
+        end += 1;
+        start += 1;
+    }
+    if (res.size() == 0)
+    {
+        cout << "Not Found" << endl;
+        cout << endl;
+        return;
+    }
+    else
+    {
+        cout << res.size() << endl;
+        // cout << endl;
+        for (ll i = 0; i < res.size(); i += 1)
+        {
+            cout << res[i] << " ";
+        }
+        cout << endl;
+        cout << endl
+             << endl;
+    }
+    // cout << res.size();
+}
