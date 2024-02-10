@@ -1,0 +1,43 @@
+ string s1, s2;
+    cin >> s1 >> s2;
+    ll k;
+    cin >> k;
+    set<pair<ll, ll>> st;
+    set<string> st1;
+    for (ll i = 0; i < s1.length(); i += 1)
+    {
+
+        ll x = 0;
+        string str = "";
+        ll pow1 = 31;
+        ll p1 = 1;
+        ll pow2 = 29;
+        ll p2 = 1;
+        ll ans1 = 0;
+        ll ans2 = 0;
+
+        for (ll j = i; j < s1.length(); j += 1)
+        {
+            if (s2[s1[j] - 'a'] == '0')
+            {
+                x += 1;
+            }
+
+            // str += s1[j];
+            if (x > k)
+            {
+
+                break;
+            }
+            ans1 += ((s1[j] - 'a' + 1) * p1) % mod;
+            p1 = (p1 * pow1) % mod;
+
+            ans2 += ((s1[j] - 'a' + 1) * p2) % mod;
+            p2 = (p2 * pow2) % mod;
+
+            st.insert({ans1, ans2});
+            // cout << str << endl;
+        }
+        // st.insert(str);
+    }
+    cout << st.size();
