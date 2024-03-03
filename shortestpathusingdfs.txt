@@ -1,0 +1,22 @@
+ll dfs2(ll &u, vec adj[], vec &vis)
+{
+    vis[u] = true;
+    if (u == res)
+    {
+        return 0;
+    }
+    ll di = 1e15;
+    for (auto v : adj[u])
+    {
+        if (v == res)
+        {
+            return 1;
+        }
+        if (!vis[v])
+        {
+            ll dist = dfs2(v, adj, vis) + 1;
+            di = min(dist, di);
+        }
+    }
+    return di;
+}
